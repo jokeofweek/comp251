@@ -203,7 +203,7 @@ public class BTree<K1 extends Comparable<K1>, V1> {
 			// if left child has at least t keys, swap k with the predecessor
 			// and then recursively delete
 			if (node.children[i].keyCount >= t) {
-				Pair<K1, V1> predecessor = node.children[i].keys[node.children[i].keyCount - 1];
+				Pair<K1, V1> predecessor = getPredecessor(node.children[i]);
 				node.keys[i] = predecessor;
 				delete(node.children[i], predecessor.key);
 				return;
@@ -211,7 +211,7 @@ public class BTree<K1 extends Comparable<K1>, V1> {
 			// if right child has at least t keys, swap k with the successor
 			// and then recursively delete
 			if (node.children[i + 1].keyCount >= t) {
-				Pair<K1, V1> successor = node.children[i + 1].keys[0];
+				Pair<K1, V1> successor = getSuccessor(node.children[i + 1]);
 				node.keys[i] = successor;
 				delete(node.children[i + 1], successor.key);
 				return;
@@ -337,6 +337,22 @@ public class BTree<K1 extends Comparable<K1>, V1> {
 				
 			}
 		}
+	}
+
+	// Get the rightmost node of a subtree
+	public Pair<K1, V1> getPredecessor(Node<K1, V1> node) {
+		while (!node.leaf) {
+			node = node.children[0];
+		}
+		return node.keys[node.keyCount - 1];
+	}
+	
+	// Get the leftmost node of a subtree
+	public Pair<K1, V1> getSuccessor(Node<K1, V1> node) {
+		while (!node.leaf) {
+			node = node.children[0];
+		}
+		return node.keys[0];
 	}
 
 	public static void runTests() {
