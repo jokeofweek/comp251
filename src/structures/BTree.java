@@ -298,12 +298,9 @@ public class BTree<K1 extends Comparable<K1>, V1> {
 				// recurse down
 				delete(potential, key);
 			} else {
-				int offset = 0;
-				
 				// if neither sibling have at least t, then we merge such that we get potential-left
 				if (i == 0) {
 					i++; // do this so that we can just always have the left and potential logic
-					offset = 1;
 				}
 				
 				sibling = node.children[i - 1];
@@ -322,7 +319,7 @@ public class BTree<K1 extends Comparable<K1>, V1> {
 				}
 				
 				// shift everyone left in the parent
-				for (int j = i + offset; j < node.keyCount; j++) {
+				for (int j = i; j < node.keyCount; j++) {
 					node.keys[j - 1] = node.keys[j];
 					node.children[j] = node.children[j + 1];
 				}
@@ -467,7 +464,7 @@ public class BTree<K1 extends Comparable<K1>, V1> {
 		tree.insert(new Pair<Integer, String>(8, "Test8"));
 		tree.insert(new Pair<Integer, String>(9, "Test9"));
 		tree.insert(new Pair<Integer, String>(10, "Test10"));
-		tree.delete(3);
+		tree.delete(1);
 		
 		System.out.println(tree.root);
 	}
