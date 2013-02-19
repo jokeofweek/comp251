@@ -303,7 +303,7 @@ public class BTree<K1 extends Comparable<K1>, V1> {
 				// if neither sibling have at least t, then we merge such that we get potential-left
 				if (i == 0) {
 					i++; // do this so that we can just always have the left and potential logic
-					offset = -1;
+					offset = 1;
 				}
 				
 				sibling = node.children[i - 1];
@@ -322,7 +322,7 @@ public class BTree<K1 extends Comparable<K1>, V1> {
 				}
 				
 				// shift everyone left in the parent
-				for (int j = i + offset + 1; j < node.keyCount; j++) {
+				for (int j = i + offset; j < node.keyCount; j++) {
 					node.keys[j - 1] = node.keys[j];
 					node.children[j] = node.children[j + 1];
 				}
@@ -453,6 +453,23 @@ public class BTree<K1 extends Comparable<K1>, V1> {
 
 	public static void main(String... args) {
 		runTests();
+		
+		BTree<Integer, String> tree = new BTree<Integer, String>();
+
+
+		tree.insert(new Pair<Integer, String>(1, "Test"));
+		tree.insert(new Pair<Integer, String>(2, "Test2"));
+		tree.insert(new Pair<Integer, String>(3, "Test3"));
+		tree.insert(new Pair<Integer, String>(4, "Test4"));
+		tree.insert(new Pair<Integer, String>(5, "Test5"));
+		tree.insert(new Pair<Integer, String>(6, "Test6"));
+		tree.insert(new Pair<Integer, String>(7, "Test7"));
+		tree.insert(new Pair<Integer, String>(8, "Test8"));
+		tree.insert(new Pair<Integer, String>(9, "Test9"));
+		tree.insert(new Pair<Integer, String>(10, "Test10"));
+		tree.delete(3);
+		
+		System.out.println(tree.root);
 	}
 
 }
